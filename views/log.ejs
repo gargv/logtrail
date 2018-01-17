@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+</head>
+<body>
+	logs here
+	<ul>
+		
+	</ul>	
+</body>
+<script type="text/javascript">
+	var socket = io()
+	socket.on('tailstream', function(stream){
+		console.log(stream)
+		stream.forEach(function(data){
+			if(data.trim()!='')
+				$('ul').append('<li>' + data + '</li>' )
+		})
+	})
+</script>
+</html>

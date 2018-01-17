@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		li.file-true{
+			color: green;
+			font-size: 1.5rem; 
+		}
+	</style>
+</head>
+<body>
+	<ul>
+	<% listing.forEach(function(object){ 
+		if(url=='/'){
+	%>
+			<li class="file-<%=object.isFile%>"><a href="<%=url%><%=object.name%>"><%= object.name %></a></li>
+	<%
+		}
+		else{
+	%>
+			<li class="file-<%=object.isFile%>"><a href="<%=url%>/<%=object.name%>"><%= object.name %></a></li>
+	<% 
+		}
+	}) 
+	%>
+	</ul>	
+</body>
+</html>
