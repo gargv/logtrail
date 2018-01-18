@@ -85,7 +85,19 @@ ul.directory-listing>li>a:hover{
 	font-family: arial;
 }
 
-.search > i{
+.search>.fa-times-circle-o{
+	color: #A2A3A3;
+	position: absolute;
+	font-size: 1.2rem;
+	right: 10px;
+	top: 12px;
+}
+
+.search>.fa-times-circle-o:hover{
+	cursor: pointer;
+}
+
+.search > .fa-search{
 	color: #A2A3A3;
 	position: absolute;
 	font-size: 1.2rem;
@@ -96,6 +108,12 @@ ul.directory-listing>li>a:hover{
 .filter{
 	background-color: #5FA5B7;
 	height: 2.9rem;
+}
+
+.filter>span{
+	font-size: 1.1rem;
+	color: white;
+	vertical-align: baseline;
 }
 
 .logger > ul{

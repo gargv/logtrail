@@ -64,7 +64,7 @@ app.get('/*', function(req, res) {
         tailFile = req.originalUrl
 
         res.render('index', {
-            listing: directoryStructure,
+            listing: JSON.stringify(directoryStructure),
             url: url, //to be appended to links in view
             stream: true
         })
@@ -75,7 +75,7 @@ app.get('/*', function(req, res) {
 
 
         res.render('index', {
-            listing: directoryStructure,
+            listing: JSON.stringify(directoryStructure),
             url: req.originalUrl, //to be appended to links in view
             stream: false
         })
@@ -89,7 +89,7 @@ app.get('/*', function(req, res) {
 //--------------- Sockets.io -----------------
 
 io.on('connection', function(socket) {
-    var tail = child_process.spawn('tail', ['-f', '-n', 25, varlog + tailFile])
+    var tail = child_process.spawn('tail', ['-f', varlog + tailFile])
 
     tail.stdout.on('data', (data) => {
         io.emit('tailstream', data.toString().split("\n"))
