@@ -2,29 +2,80 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
-	<style type="text/css">
-		li.file-true{
-			color: green;
-			font-size: 1.5rem; 
-		}
-	</style>
+	<title>Logtrail</title>
+	<link rel="stylesheet" type="text/css" href="/assets/styles.css">
+	<link rel="shortcut icon" href="/assets/favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 </head>
 <body>
-	<ul>
-	<% listing.forEach(function(object){ 
-		if(url=='/'){
-	%>
-			<li class="file-<%=object.isFile%>"><a href="<%=url%><%=object.name%>"><%= object.name %></a></li>
-	<%
-		}
-		else{
-	%>
-			<li class="file-<%=object.isFile%>"><a href="<%=url%>/<%=object.name%>"><%= object.name %></a></li>
-	<% 
-		}
-	}) 
-	%>
-	</ul>	
+	
+		<div class="sidebar">
+			<div class="search">
+				<i class="fa fa-search" aria-hidden="true"></i>
+				<input type="text" placeholder="Search">
+			</div>
+			
+			<h2 class="explorer">Explorer</h2>
+
+			<div class="wrapper">
+				<ul class="directory-listing">
+					<% listing.forEach(function(object){ 
+						if(url=='/'){
+					%>
+							
+							<li class="file-<%=object.isFile%>"><a href="<%=url%><%=object.name%>" title="<%=object.name%>"><%= object.name %></a></li>
+					<%
+						}
+						else{
+					%>
+
+							<li class="file-<%=object.isFile%>"><a href="<%=url%>/<%=object.name%>" title="<%=object.name%>"><%= object.name %></a></li>
+					<% 
+						}
+					}) 
+					%>
+				</ul>
+			</div>
+
+
+		</div>
+
+
+
+		<div class="logger">
+			<div class="filter">
+
+			</div>
+
+			<ul></ul>
+
+		</div>
+
+
+
+		
 </body>
+
+<%
+	if(stream===true){
+%>
+
+	<script type="text/javascript">
+	var socket = io()
+	socket.on('tailstream', function(stream){
+		console.log(stream)
+		stream.forEach(function(data){
+			if(data.trim()!='')
+				$('.logger>ul').append('<li>' + data + '</li>' )
+		})
+	})
+</script>
+
+<%
+	}
+%>
+
+
 </html>
