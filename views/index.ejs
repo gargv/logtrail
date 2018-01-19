@@ -54,7 +54,11 @@
 
 		<div class="logger">
 			<div class="filter">
-
+				<div class="filter-wrapper">
+					<i class="fa fa-filter" aria-hidden="true"></i>
+					<input type="text" class="regex" placeholder="Filter(Regexp)">
+					<a class="grep-btn">grep!</a>
+				</div>
 			</div>
 
 			<ul></ul>
@@ -70,14 +74,23 @@
 	if(stream===true){
 %>
 
-	<script type="text/javascript">
+<script type="text/javascript">
+	var expression="";
 	var socket = io()
 	socket.on('tailstream', function(stream){
-		console.log(stream)
 		stream.forEach(function(data){
 			if(data.trim()!='')
-				$('.logger>ul').append(`<li> + ${data} + </li>` )
+				if(new RegExp(expression).test(data))
+					$('.logger>ul').append(`<li> + ${data} + </li>` )
 		})
+	})
+
+	$('.grep-btn').on('click', function(){
+		expression = $('.regex').val()
+		console.log(expression)
+		$('.logger>ul').html('')
+		socket.disconnect()
+		socket.connect()
 	})
 </script>
 
